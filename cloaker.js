@@ -60,27 +60,4 @@ function clockTime(){
 };
 
 
-clockTime();
 
-document.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-      const exploit = document.getElementById('exploit').value;
-      const siteload = window.open('about:blank', '_blank');
-      const doc1 = siteload.document;
-      const iframe1 = doc1.createElement('iframe');
-      const style1 = iframe1.style;
-      const link1 = doc1.createElement('link');
-      
-      doc1.title = 'Google Drive';
-      iframe1.src = exploit;
-      style1.position = 'fixed';
-      style1.border = style1.outline = 'none';
-      style1.top = style1.bottom = style1.left = style1.right = 0;
-      style1.width = style1.height = '100%';
-
-      link1.rel = 'icon';
-      link1.href = 'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png';
-      
-      doc1.body.appendChild(iframe1);
-    }
-});
