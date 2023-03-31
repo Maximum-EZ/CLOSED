@@ -40,11 +40,12 @@
     <img src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="Loading..." />
   </div>
   <p id="redirect-message">You will be redirected to w3docs.com soon!</p>
-  <p>Redirecting Soon...</p>
+  <p id="loading-message">Redirecting Soon...</p>
   <meta http-equiv="refresh" content="7; url='https://www.w3docs.com'" />
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("loading").style.display = "block";
+      document.getElementById("loading-message").style.display = "block";
       document.getElementById("redirect-message").style.display = "none";
     });
   </script>
