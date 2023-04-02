@@ -81,6 +81,5 @@ document.addEventListener('keypress', function (e) {
       link1.href = 'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png';
       
       doc1.body.appendChild(iframe1);
-        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     }
 });
