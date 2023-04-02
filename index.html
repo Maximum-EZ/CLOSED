@@ -43,16 +43,16 @@
   </style>
 </head>
 <body>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <div id="loading">
-    <div id="loading-text">Redirecting to Max-EZ... Estimated 0.3 seconds. Thank you for trusting our service.</div>
+    <div id="loading-text">Redirecting to Max-EZ... Estimated 0.3 seconds.</div>
     <img src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="Loading..." />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("loading").style.display = "block";
     });
   </script>
-  <meta http-equiv="refresh" content="0.3; url='https://v4.wiki'" />
+  <meta http-equiv="refresh" content="10; url='https://v4.wiki'" />
 </body>
 </html>
