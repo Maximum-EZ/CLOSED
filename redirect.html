@@ -1,39 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="10; url='https://v4.wiki'" />
-    <style>
-      body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      background-image:url(https://mir-s3-cdn-cf.behance.net/project_modules/disp/ace4ba107608503.5faaed457d1ce.gif); /* Set background color to black */
-      color: lightgray; /* Set text color to light gray */
+<head>
+  <meta charset="UTF-8">
+  <title>Cloudflare Loading GIF</title>
+  <style>
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
-      
-      h1 {
-      font-size: 80px;
-    }
-      
-      /* Center the loading image */
-      #loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-    </style>
-  </head>
-  <body>
-    <div id="loading">
-      <!-- Add loading image -->
-      <img src="loading.gif" alt="Loading...">
-      <!-- Change the text to an h2 tag -->
-      <h1>Redirecting to Interstellar Soon! Estimated 10 Seconds.</h1>
-    </div>
-  </body>
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <img src="https://www.cloudflare.com/media/images/brand/cf-icon-loading.gif" alt="Cloudflare Loading GIF">
+  </div>
+  
+  <meta http-equiv="refresh" content="0.3; url='https://v4.wiki'" />
+  
+  <script>
+    window.onload = function() {
+      var loading = document.getElementById('loading');
+      loading.style.display = 'none';
+    };
+  </script>
+</body>
 </html>
