@@ -1,24 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <style>
-    #loading {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  </style>
+	<meta charset="UTF-8">
+	<title>Loading Screen</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		#loader {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 9999;
+			background-color: #ffffff;
+			border-radius: 50%;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+			width: 80px;
+			height: 80px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#loader img {
+			width: 50px;
+			height: 50px;
+		}
+		#content {
+			display: none;
+		}
+	</style>
 </head>
 <body>
-  <div id="loading">
-    <img src="https://www.cloudflare.com/media/images/brand/cf-icon-loading.gif" alt="Cloudflare Loading GIF">
-  </div>
-  
-  <meta http-equiv="refresh" content="10; url='https://v4.wiki'" />
-  
-  <div style="display: none;">
-    <!-- The content of the page goes here -->
-  </div>
+	<div id="loader">
+		<img src="https://www.cloudflare.com/media/images/brand/cf-icon-loading.gif" alt="Loading...">
+	</div>
+	<div id="content">
+		<!-- Your content goes here -->
+		<h1>Welcome to my website!</h1>
+		<p>This is some example content.</p>
+	</div>
+	<script>
+		// Wait for the page to load before showing the content
+		window.addEventListener('load', function() {
+			// Hide the loading screen
+			document.getElementById('loader').style.display = 'none';
+			// Show the content
+			document.getElementById('content').style.display = 'block';
+		});
+	</script>
 </body>
 </html>
