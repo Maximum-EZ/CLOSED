@@ -24,11 +24,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/web", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "web.html"));
+  res.sendFile(path.join(__dirname, "static", "google.html"));
 });
 
 app.get("/play", (req, res) => {
-  res.sendFile(path.join(__dirname, "static", "play.html"));
+  res.sendFile(path.join(__dirname, "static", "redirect.html"));
 });
 
 app.get("/apps", (req, res) => {
