@@ -1,54 +1,89 @@
-/**
- * Example of serving static files and running a bare server.
- * This is a very common setup.
- */
-import createBareServer from '@tomphttp/bare-server-node';
-import { createServer } from 'node:http';
-import { fileURLToPath } from 'node:url';
-import serveStatic from 'serve-static';
+import express from "express";
+import http from "node:http";
+import createBareServer from "@tomphttp/bare-server-node";
+import path from "node:path";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const httpServer = createServer();
+const __dirname = process.cwd();
+const server = http.createServer();
+const app = express(server);
+const bareServer = createBareServer("/bare/");
 
-// Run the Bare server in the /bare/ namespace. This will prevent conflicts between the static files and the bare server.
-const bareServer = createBareServer('/bare/');
-
-// The static root is usually relative to the main script in projects that use the Bare server.
-// ie. if static.js is at /src/static.js, public will be /public/
-// ideally, you will point the public directory relative to the current working directory
-// serveStatic('./public/')
-// This would ignore the relative location of static.js
-const serve = serveStatic(
-	fileURLToPath(new URL('../public/', import.meta.url)),
-	{
-		fallthrough: false,
-	}
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
 );
 
-httpServer.on('request', (req, res) => {
-	if (bareServer.shouldRoute(req)) {
-		bareServer.routeRequest(req, res);
-	} else {
-		serve(req, res, (err) => {
-			res.writeHead(err?.statusCode || 500, {
-				'Content-Type': 'text/plain',
-			});
-			res.end(err?.stack);
-		});
-	}
+app.use(express.static(path.join(__dirname, "static")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "index.html"));
 });
 
-httpServer.on('upgrade', (req, socket, head) => {
-	if (bareServer.shouldRoute(req)) {
-		bareServer.routeUpgrade(req, socket, head);
-	} else {
-		socket.end();
-	}
+app.get("/web", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "web.html"));
 });
 
-httpServer.on('listening', () => {
-	console.log('HTTP server listening');
+app.get("/play", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "play.html"));
 });
 
-httpServer.listen({
-	port: 8080,
+app.get("/apps", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "apps.html"));
+});
+
+app.get("/math", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "math.html"));
+});
+
+app.get("/chat", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "chat.html"));
+});
+
+app.get("/go", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "go.html"));
+});
+
+app.get("/settings", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "settings.html"));
+});
+
+app.get("/donate", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "donate.html"));
+});
+
+app.get("/404", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "404.html"));
+});
+
+app.get("/*", (req, res) => {
+  res.redirect("/404");
+});
+
+// Bare Server
+server.on("request", (req, res) => {
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeRequest(req, res);
+  } else {
+    app(req, res);
+  }
+});
+
+server.on("upgrade", (req, socket, head) => {
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeUpgrade(req, socket, head);
+  } else {
+    socket.end();
+  }
+});
+
+server.on("listening", () => {
+  console.log(`Interstellar running at http://localhost:${process.env.PORT}`);
+});
+
+server.listen({
+  port: process.env.PORT,
 });
