@@ -1,7 +1,0 @@
-{
-    "prefix": "/service",
-    "target": "https://www.google.com",
-    "port": 8080,
-    "encodeUrl": true
-  }
-  
