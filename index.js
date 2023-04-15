@@ -1,31 +1,54 @@
-const http = require('http');
+import express from "express";
+import http from "node:http";
+import createBareServer from "@tomphttp/bare-server-node";
+import path from "node:path";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const proxy = http.createServer((req, res) => {
-  // Set the target URL for the proxy
-  const targetUrl = 'http://example.com/static';
+const __dirname = process.cwd();
+const server = http.createServer();
+const app = express(server);
+const bareServer = createBareServer("/bare/");
 
-  // Create the request options object
-  const options = {
-    hostname: targetUrl,
-    path: req.url,
-    method: req.method,
-    headers: req.headers
-  };
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-  // Make the proxy request
-  const proxyReq = http.request(options, (proxyRes) => {
-    // Set the response headers
-    res.writeHead(proxyRes.statusCode, proxyRes.headers);
+app.use(express.static(path.join(__dirname, "static")));
 
-    // Pipe the response from the target server to the client
-    proxyRes.pipe(res);
-  });
-
-  // Pipe the client request to the proxy request
-  req.pipe(proxyReq);
+app.get("/index", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "index.html"));
 });
 
-// Start the proxy server on port 3000
-proxy.listen(3000, () => {
-  console.log('Proxy server started on port 3000');
+app.get("/redirect", (req, res) => {
+  res.sendFile(path.join(__dirname, "static", "redirect.html"));
+});
+
+
+// Bare Server
+server.on("request", (req, res) => {
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeRequest(req, res);
+  } else {
+    app(req, res);
+  }
+});
+
+server.on("upgrade", (req, socket, head) => {
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeUpgrade(req, socket, head);
+  } else {
+    socket.end();
+  }
+});
+
+server.on("listening", () => {
+  console.log(`Interstellar running at http://localhost:${process.env.PORT}`);
+});
+
+server.listen({
+  port: process.env.PORT,
 });
