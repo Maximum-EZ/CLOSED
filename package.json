@@ -1,0 +1,14 @@
+{
+    "name": "ultraviolet-proxy",
+    "version": "1.0.0",
+    "description": "Ultraviolet proxy server",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "dependencies": {
+      "@cloudflare/workers-types": "^1.10.1",
+      "node-fetch": "^3.0.0"
+    }
+  }
+  
